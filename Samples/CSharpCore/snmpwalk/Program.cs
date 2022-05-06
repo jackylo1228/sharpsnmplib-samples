@@ -25,6 +25,13 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Mono.Options;
 using System.Reflection;
+using System.IO;
+
+using System.Diagnostics;
+using System.ComponentModel;
+
+
+
 
 namespace SnmpWalk
 {
@@ -32,6 +39,9 @@ namespace SnmpWalk
     {
         public static void Main(string[] args)
         {
+           
+               
+
             string community = "public";
             bool showHelp = false;
             bool showVersion = false;
@@ -48,6 +58,13 @@ namespace SnmpWalk
             string privPhrase = string.Empty;
             WalkMode mode = WalkMode.WithinSubtree;
             bool dump = false;
+            
+
+
+
+
+
+
 
             OptionSet p = new OptionSet()
                 .Add("c:", "Community name, (default is public)", delegate (string v) { if (v != null) community = v; })
@@ -186,7 +203,7 @@ namespace SnmpWalk
                 }
                 else if (version == VersionCode.V2)
                 {
-                    Messenger.BulkWalk(version, receiver, new OctetString(community), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty: contextName),  test, result, timeout, maxRepetitions, mode, null, null);
+                    Messenger.BulkWalk(version, receiver, new OctetString(community), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName), test, result, timeout, maxRepetitions, mode, null, null);
                 }
                 else
                 {
@@ -219,22 +236,36 @@ namespace SnmpWalk
 
                     Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetBulkRequestPdu);
                     ReportMessage report = discovery.GetResponse(timeout, receiver);
-                    Messenger.BulkWalk(version, receiver, new OctetString(user), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName),  test, result, timeout, maxRepetitions, mode, priv, report);
+                    Messenger.BulkWalk(version, receiver, new OctetString(user), new OctetString(string.IsNullOrWhiteSpace(contextName) ? string.Empty : contextName), test, result, timeout, maxRepetitions, mode, priv, report);
                 }
 
+                
                 foreach (Variable variable in result)
                 {
+                   
+
+
                     Console.WriteLine(variable);
+
                 }
+                
+
             }
             catch (SnmpException ex)
             {
                 Console.WriteLine(ex);
+                
             }
             catch (SocketException ex)
             {
                 Console.WriteLine(ex);
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Excrption" + ex.Message);
+            }
+
+            
         }
 
         private static IAuthenticationProvider GetAuthenticationProviderByName(string authentication, string phrase)
@@ -254,10 +285,25 @@ namespace SnmpWalk
 
         private static void ShowHelp(OptionSet optionSet)
         {
+
             Console.WriteLine("#SNMP is available at https://sharpsnmp.com");
             Console.WriteLine("snmpwalk [Options] IP-address|host-name [OID]");
             Console.WriteLine("Options:");
             optionSet.WriteOptionDescriptions(Console.Out);
+
+
         }
+   
+
+        
+
+
+        
+
+        
+
+
+
+
     }
 }

@@ -9,7 +9,7 @@
     <RootNamespace>Lextm.SharpSnmpLib.Agent</RootNamespace>
     <AssemblyName>snmpd</AssemblyName>
     <ApplicationIcon>Resources\network-server.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AssemblyOriginatorKeyFile>..\..\..\SharpSnmpLib\sharpsnmplib.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <FileAlignment>512</FileAlignment>
